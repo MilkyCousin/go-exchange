@@ -265,14 +265,14 @@ func sendMail(ctx *gin.Context) {
 		// recall current rate
 		data, _ := makeRequest()
 		msgContent := []byte(formMessage(data))
+		
+		// authentification
+		auth := smtp.PlainAuth("", mailFrom.Address, mailFrom.Password, mailFrom.SmtpHost)
 
 		// iterate over emails and send the message
 		for _, ej := range emails {
 			var successLocal = false
-
-			// authentification
-			auth := smtp.PlainAuth("", mailFrom.Address, mailFrom.Password, mailFrom.SmtpHost)
-
+			
 			// send message
 			to := []string{ej.Email}
 			err := smtp.SendMail(mailFrom.SmtpHost+":"+mailFrom.SmtpPort, auth, mailFrom.Address, to, msgContent)
