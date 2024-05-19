@@ -20,7 +20,7 @@
 3. Знаходите 'env-params.txt' файл, в ньому редагуєте значення змінних:
    - EXCHANGE_API_TOKEN - вказуєте токен [ExchangeRate-API](https://www.exchangerate-api.com), який отримали під час реєстрації (або іншим шляхом).
    - EMAIL_ADDRESS, EMAIL_PASSWORD, EMAIL_SMTPHOST, EMAIL_SMTPPORT - credentials поштової скриньки, з якої можна відправити контент по SMTP.
-   - За потреба можна змінити порти у змінних WEB_PORT_TARGET, WEB_PORT_PUBLISH, DB_PORT_TARGET, DB_PORT_PUBLISH.
+   - За потреби можна змінити порти у змінних WEB_PORT_TARGET, WEB_PORT_PUBLISH, DB_PORT_TARGET, DB_PORT_PUBLISH.
 5. Відредагований файл 'env-params.txt' перейменовуєте на '.env'.
 6. Відкриваєте термінал (або аналог), запускаєте окрестратор використовуючи відповідну команду
    ```
