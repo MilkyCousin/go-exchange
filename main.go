@@ -103,6 +103,9 @@ type Form struct {
 
 // related to db
 
+// Function connectToDb implements connection to MySQL DB using the credentials,
+// passed from environment variables. It also checks whther the DB has a table,
+// needed for operations.
 func connectToDb() {
 	// setup db connection
 	cfg := mysql.Config{
@@ -132,6 +135,10 @@ func connectToDb() {
 	}
 }
 
+// Function addToDb implements insertion of email to EMAIL table.
+// Firstly the given address is validated using regex.
+// After that, it is checked whether the table already contains the email.
+// If not, the email is inserted into the table with success.
 func addToDb(emailGiven EmailData) bool {
 	var success bool = false
 
@@ -160,6 +167,9 @@ func addToDb(emailGiven EmailData) bool {
 	return success
 }
 
+// Function getFromDb retreives all of the records, i.e. emails,
+// from table EMAIL in DB. If the retreival is successful,
+// the contents of the table are returned.
 func getFromDb() ([]EmailData, bool) {
 	var success bool = false
 	var extracted []EmailData
@@ -184,6 +194,10 @@ func getFromDb() ([]EmailData, bool) {
 
 // related to exchange rates api
 
+// Function makeRequest implements interaction with exchange api using 
+// pair conversion request, see
+// https://www.exchangerate-api.com/docs/pair-conversion-requests.
+// If query to api is successful, the currency rate data is returned.
 func makeRequest() (CurrencyRate, bool) {
 	var success bool = false
 	var result CurrencyRate
@@ -203,6 +217,8 @@ func makeRequest() (CurrencyRate, bool) {
 
 // other
 
+// Function formMessage implements creation of string,
+// used as a text message for mail sender. 
 func formMessage(data CurrencyRate) string {
 	// preparation step for mail sender
 	var out string = fmt.Sprintf(
@@ -213,6 +229,8 @@ func formMessage(data CurrencyRate) string {
 
 // related to web-interface
 
+// Function getCurrency is so called handler for GET-method /rate.
+// It retreives a currency rate as a response
 func getCurrency(ctx *gin.Context) {
 	// retreive the currency rate from response
 	outputBody, valid := makeRequest()
@@ -229,6 +247,8 @@ func getCurrency(ctx *gin.Context) {
 	}{outputBody.ConversionRate})
 }
 
+// Function addEmail is so called handler for POST-method /subscribe.
+// It tries to append email address, given in json body from user.
 func addEmail(ctx *gin.Context) {
 	var emailPattern string = `^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$`
 	var emailGiven EmailData
@@ -255,6 +275,9 @@ func addEmail(ctx *gin.Context) {
 	}{Details: selectedResult.ResultMessage})
 }
 
+// Function sendMail is so called handler for POST-method /sendEmails.
+// It tries to send a currency rate from source email, passed from the environment,
+// to the emails, contained in table EMAILS of DB.
 func sendMail(ctx *gin.Context) {
 	var success bool = true
 
