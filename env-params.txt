@@ -6,6 +6,7 @@ WEB_PORT_PUBLISH=8080
 DB_PORT_TARGET=3306
 DB_PORT_PUBLISH=3306
 
+# for example 7e026dbcc375bd40cd0edb6d
 EXCHANGE_API_TOKEN=supersecrettoken
 
 EMAIL_ADDRESS="coolmail@supermail.com"
