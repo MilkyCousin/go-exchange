@@ -1,6 +1,7 @@
-version: '60'
+version: '1'
 
 services:
+  # configuration for go environment
   web:
     build:
       context: .
@@ -16,6 +17,7 @@ services:
     env_file:
       - .env
   
+  # configuration for mysql environment
   database:
     platform: "linux/x86_64"
     image: "mysql:latest"
